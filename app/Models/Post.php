@@ -29,4 +29,9 @@ class Post extends Model
     {
         return route('admin.posts.destroy', ['post' => $this]);
     }
+
+    public function likes()
+    {
+        return $this->hasManyThrough(CommentLike::class, Comment::class);
+    }
 }

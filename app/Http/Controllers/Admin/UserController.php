@@ -5,18 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
-use App\Mail\UsedDataChangedMail;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use App\Repos\UserManager;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(UserManager $userRepo)
     {
+        $users = $userRepo->getAllAdmins();
+        $userRepo->updateUser($users->first()->id, ['name' => 'test']);
+
         return view('admin.pages.list', [
             'title'      => 'Users',
             'collection' => User::all(),
@@ -47,7 +48,9 @@ class UserController extends Controller
     {
         $password = \Hash::make($request->password);
 
-        $user = User::create($request->except('password') + compact('password'));
+        $user = User::create(
+            $request->except('password') + compact('password')
+        );
 
 //        Mail::to($request->email)->send(new UsedDataChangedMail($user));
 
