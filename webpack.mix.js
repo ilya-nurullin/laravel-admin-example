@@ -14,4 +14,5 @@ mix.disableSuccessNotifications()
 mix.disableNotifications()
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/css/admin.scss', 'css/admin.css');
+    .sass('resources/css/admin.scss', 'css/admin.css')
+;
