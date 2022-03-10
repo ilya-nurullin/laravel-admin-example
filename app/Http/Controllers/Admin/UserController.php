@@ -7,9 +7,18 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use App\Repos\UserManager;
+use App\Services\NotificationService;
+use App\Services\PaymentProviders\DepositPaymentProviderService;
 
 class UserController extends Controller
 {
+    private NotificationService $notificationService;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -52,7 +61,7 @@ class UserController extends Controller
             $request->except('password') + compact('password')
         );
 
-//        Mail::to($request->email)->send(new UsedDataChangedMail($user));
+        $this->notificationService->notify($user->id, '1234');
 
         return redirect()->route('admin.users.index');
     }

@@ -33,3 +33,18 @@ Route::get('/comments/{user}',
 Route::get('/set', function () {
     return response()->make()->withCookie(cookie()->forever('lang', 'ru'));
 });
+
+Route::get('/di', function (\App\Services\NotificationService $notificationService) {
+    $l1 = app(\App\Services\NotificationService::class);
+    $l2 = app(\App\Services\NotificationService::class);
+    $l3 = app(\App\Services\NotificationService::class);
+
+    dump(
+        [
+            app(\App\Services\NotificationService::class)->notify(1, 'welcome'),
+            $l1->notify(2, 'welcome'),
+            $l2->notify(3, 'welcome'),
+            $l3->notify(4, 'welcome'),
+            $notificationService->notify(5, 'welcome')
+        ]);
+});

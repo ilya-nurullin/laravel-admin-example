@@ -13,6 +13,7 @@
 <pre>
 name = {{$user->name}}
 email = {{$user->email}}
+message = {{ $messageForUser }}
 </pre>
 </body>
 </html>

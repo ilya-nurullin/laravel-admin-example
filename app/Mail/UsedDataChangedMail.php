@@ -13,16 +13,18 @@ class UsedDataChangedMail extends Mailable
     use Queueable, SerializesModels;
 
     public User $user;
+    public string $messageForUser;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $messageForUser)
     {
         //
         $this->user = $user;
+        $this->messageForUser = $messageForUser;
     }
 
     /**
@@ -32,6 +34,7 @@ class UsedDataChangedMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Your used data has been changed')->view('emails.used-data-changed');
+        return $this->subject('Your used data has been changed')
+                    ->view('emails.used-data-changed');
     }
 }
