@@ -2,23 +2,24 @@
 
 namespace App\Providers;
 
+use App\Contracts\CalculatorInterface;
 use App\Services\CalculatorService;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class CalcServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register services.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->bind('mycalc', CalculatorService::class);
+        $this->app->bind(CalculatorInterface::class, CalculatorService::class);
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      *
      * @return void
      */

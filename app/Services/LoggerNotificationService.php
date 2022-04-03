@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Contracts\NotificationService;
 use Illuminate\Log\LogManager;
 
 class LoggerNotificationService implements NotificationService

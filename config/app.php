@@ -1,5 +1,7 @@
 <?php
 
+use App\Facades\CalcFacade;
+
 return [
 
     /*
@@ -175,6 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\NotificationServiceProvider::class,
+        App\Providers\CalcServiceProvider::class,
 
     ],
 
@@ -230,6 +233,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'CalcFacade' => CalcFacade::class,
 
     ],
 

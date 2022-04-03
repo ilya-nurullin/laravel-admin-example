@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Contracts\NotificationService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use App\Repos\UserManager;
-use App\Services\NotificationService;
 use App\Services\PaymentProviders\DepositPaymentProviderService;
 
 class UserController extends Controller

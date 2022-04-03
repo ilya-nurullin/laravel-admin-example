@@ -3,8 +3,12 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
+/**
+ * @group cache
+ */
 class ExampleTest extends TestCase
 {
     /**
@@ -14,8 +18,12 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $response = $this->get('/');
+        $expectedCacheValue = 'qwerewr';
 
-        $response->assertStatus(200);
+        Cache::shouldReceive('get')->with('key', '1234')->andReturn($expectedCacheValue);
+
+        $response = $this->get('/get-cache');
+
+        $response->assertStatus(200)->assertSeeText($expectedCacheValue);
     }
 }

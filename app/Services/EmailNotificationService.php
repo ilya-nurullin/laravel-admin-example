@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Contracts\NotificationService;
 use App\Mail\UsedDataChangedMail;
 use App\Models\User;
-use Illuminate\Log\LogManager;
 use Illuminate\Support\Facades\Mail;
 
 class EmailNotificationService implements NotificationService

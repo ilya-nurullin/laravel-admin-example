@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
+use App\Contracts\NotificationService;
 use App\Http\Controllers\Admin\UserController;
 use App\Services\EmailNotificationService;
 use App\Services\LoggerNotificationService;
-use App\Services\NotificationService;
 use Illuminate\Support\ServiceProvider;
 
 class NotificationServiceProvider extends ServiceProvider
