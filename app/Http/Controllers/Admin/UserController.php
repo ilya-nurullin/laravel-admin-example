@@ -40,6 +40,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
+
         return view('admin.pages.user.edit', [
             'user' => [],
             'title' => 'Add new user',
@@ -55,6 +57,8 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
+        $this->authorize('create', User::class);
+
         $password = \Hash::make($request->password);
 
         $user = User::create(

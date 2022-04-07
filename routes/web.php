@@ -86,3 +86,10 @@ Route::get('/get-cache', function () {
     Broadcast::class;
     return cache('key', '1234');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+
+Route::get('/login/{userId}', fn ($id) => Auth::loginUsingId($id));

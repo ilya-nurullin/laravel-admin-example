@@ -18,6 +18,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, FormAccessible, AsTable;
 
+    const EDITOR_ROLE = 'editor';
+
     /**
      * The attributes that are mass assignable.
      *
