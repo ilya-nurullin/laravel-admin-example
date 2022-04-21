@@ -78,4 +78,9 @@ class User extends Authenticatable
     {
         return new UserQueryBuilder($query);
     }
+
+    public function makeAdmin() {
+        $this->is_admin = true;
+        $this->save();
+    }
 }
