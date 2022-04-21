@@ -20,10 +20,16 @@ class ExampleTest extends TestCase
     {
         $expectedCacheValue = 'qwerewr';
 
+        $this->generateData();
+
         Cache::shouldReceive('get')->with('key', '1234')->andReturn($expectedCacheValue);
 
         $response = $this->get('/get-cache');
 
         $response->assertStatus(200)->assertSeeText($expectedCacheValue);
+    }
+
+    protected function generateData() {
+
     }
 }

@@ -17,3 +17,5 @@ public/css
 public/js
 public/fonts
 *.iml
+/.env.testing
+coverage

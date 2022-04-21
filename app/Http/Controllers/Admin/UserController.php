@@ -9,6 +9,7 @@ use App\Http\Requests\EditUserRequest;
 use App\Models\User;
 use App\Repos\UserManager;
 use App\Services\PaymentProviders\DepositPaymentProviderService;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -22,12 +23,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(UserManager $userRepo)
+    public function index(Request $request, UserManager $userRepo)
     {
         $users = $userRepo->getAllAdmins();
         $userRepo->updateUser($users->first()->id, ['name' => 'test']);
 
-        return view('admin.pages.list', [
+        return $request->expectsJson() ? User::all() : view('admin.pages.list', [
             'title'      => 'Users',
             'collection' => User::all(),
             'addUrl' => route('admin.users.create')

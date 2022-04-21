@@ -93,3 +93,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
 
 Route::get('/login/{userId}', fn ($id) => Auth::loginUsingId($id));
+
+Route::get('/json', fn() => ['ok' => true, 'errors' => [['name' => [ 'message' => 'Too short', 'code' => 123 ]]]]);

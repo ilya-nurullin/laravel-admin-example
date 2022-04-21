@@ -12,11 +12,10 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.pages.list', [
+        return $request->expectsJson() ? Post::all() : view('admin.pages.list', [
             'title'      => 'Posts',
             'collection' => Post::all(),
             'addUrl' => route('admin.posts.create')
