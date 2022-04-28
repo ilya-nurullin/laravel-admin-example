@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\AddOwnHeaders;
 use App\Services\CalculatorService;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('mycalc', CalculatorService::class);
+//        $this->app->singleton(AddOwnHeaders::class, AddOwnHeaders::class);
     }
 
     /**

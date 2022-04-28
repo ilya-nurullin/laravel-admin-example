@@ -163,3 +163,31 @@ Route::get('/dow', function (\Illuminate\Http\Request $request){
 //        return Storage::disk('local')->download('robots.txt', '123.txt');
 //    abort(403);
 });
+
+Route::group([
+    'middleware' => [
+        'auth',
+        \App\Http\Middleware\CheckAge::class . ':18',
+    ],
+], function () {
+    Route::get('/for-adults', function () {
+        return "<h1>For adults</h1>";
+    });
+
+    Route::get('/for-adults2', function () {
+        return "<h1>For adults2</h1>";
+    });
+});
+
+Route::post('/json', function (\Illuminate\Http\Request $request) {
+    $user = $request->input('user');
+    dump($user);
+    dump($request->header('X-ORIGIN-CONTENT_TYPE'));
+
+    return $user['name'];
+})->middleware(\App\Http\Middleware\ConvertXmlRequestToJson::class);
+
+Route::get('/xml', function () {
+   return ['user' => [ 'id' => 2, 'name' => 'User' ]];
+})->middleware(\App\Http\Middleware\ConvertJsonResponseToXml::class);
+
