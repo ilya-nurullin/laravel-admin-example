@@ -5,8 +5,12 @@ use App\Contracts\NotificationService;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\TestController;
 use App\Models\User;
+use App\Services\CacheAndReturn;
+use App\Services\CacheService;
 use App\Services\CalculatorNotificationService;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -191,3 +195,74 @@ Route::get('/xml', function () {
    return ['user' => [ 'id' => 2, 'name' => 'User' ]];
 })->middleware(\App\Http\Middleware\ConvertJsonResponseToXml::class);
 
+Route::get('/cache', function (CacheManager $cache) {
+    $invk = new CacheAndReturn();
+
+    return $invk($cache);
+});
+
+Route::get('/put', function () {
+    $data = [
+        'qwe' => true,
+        'number' => 5
+    ];
+
+    dump(Cache::putMany($data, 60));
+
+   return 'ok';
+});
+
+Route::get('/lock', function () {
+    $lock = Cache::lock('singleton', 10);
+
+    try {
+        $lock->block(1);
+
+        sleep(5);
+
+        $lock->release();
+
+        return "locked";
+    } catch (\Illuminate\Contracts\Cache\LockTimeoutException $e) {
+        return "could not lock";
+    }
+
+//    $res = $lock->get(function () {
+//        sleep(4);
+//
+//        return "locked";
+//    });
+//
+//    if (!empty($res))
+//        return $res;
+//
+//    return "could not lock";
+});
+
+Route::get('/tags', function () {
+    CacheService::getUserCacheManager()->put('id1', 'John');
+    CacheService::getAdminCacheManager()->put('id2', 'Admin');
+
+    return [
+        CacheService::getUserCacheManager()->get('id1', 'unknown'),
+        CacheService::getAdminCacheManager()->get('id2', 'unknown'),
+    ];
+
+});
+Route::get('/show-tags', function () {
+    return [
+        CacheService::getUserCacheManager()->get('id1', 'unknown'),
+        CacheService::getAdminCacheManager()->get('id2', 'unknown'),
+    ];
+
+});
+
+Route::get('/invalidate', function () {
+    return Cache::tags(['general-user'])->flush();
+});
+
+Route::get('/cached-user/{id}', function ($userId) {
+    $user = User::remember(120)->whereId($userId)->first();
+
+    return [$user->name, $user->email];
+});

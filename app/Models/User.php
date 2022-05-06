@@ -10,13 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Watson\Rememberable\Rememberable;
 
 /**
  * @property Comment[] comments
  */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, FormAccessible, AsTable;
+    use HasApiTokens, HasFactory, Notifiable, FormAccessible, AsTable, Rememberable;
 
     const EDITOR_ROLE = 'editor';
 
