@@ -199,7 +199,7 @@ Route::get('/cache', function (CacheManager $cache) {
     $invk = new CacheAndReturn();
 
     return $invk($cache);
-});
+})->name('cache');
 
 Route::get('/put', function () {
     $data = [
