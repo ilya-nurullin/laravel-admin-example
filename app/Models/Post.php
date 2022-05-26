@@ -6,6 +6,10 @@ use App\View\Components\Contracts\AsTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string text
+ * @property-read User $user
+ */
 class Post extends Model
 {
     use HasFactory, AsTable;
@@ -14,6 +18,8 @@ class Post extends Model
         'user_id',
         'text',
     ];
+
+    protected $hidden = ['updated_at', 'user_id'];
 
     public function user()
     {

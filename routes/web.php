@@ -9,6 +9,7 @@ use App\Services\CacheAndReturn;
 use App\Services\CacheService;
 use App\Services\CalculatorNotificationService;
 use Illuminate\Cache\CacheManager;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -265,4 +266,10 @@ Route::get('/cached-user/{id}', function ($userId) {
     $user = User::remember(120)->whereId($userId)->first();
 
     return [$user->name, $user->email];
+});
+
+Route::get('/set-session', function (Request $request) {
+    session(['message' => 'Hi there!']);
+
+    return 'ok';
 });

@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin@admin.com'),
             'is_admin' => true,
-            'birth_date' => '1995-01-01'
+            'birth_date' => '1995-01-01',
+            'api_token' => '123',
         ]);
 
         CommentLike::factory(10)->create();

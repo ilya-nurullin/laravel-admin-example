@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Http\Middleware\AddOwnHeaders;
+use App\Repos\EloquentPostRepo;
+use App\Repos\PostRepo;
 use App\Services\CalculatorService;
 use App\Services\Users\Repo\EloquentUserRepo;
 use App\Services\Users\Repo\UserRepo;
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('mycalc', CalculatorService::class);
 //        $this->app->singleton(AddOwnHeaders::class, AddOwnHeaders::class);
         $this->app->singleton(UserRepo::class, EloquentUserRepo::class);
+        $this->app->singleton(PostRepo::class, EloquentPostRepo::class);
     }
 
     /**

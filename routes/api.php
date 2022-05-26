@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiPostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:token')->get('/posts', function (Request $request) {
-    return \App\Models\Post::all();
-});
+//Route::middleware('auth:token')->get('/posts', function (Request $request) {
+//    return \App\Models\Post::all();
+//});
+
+Route::apiResource('posts', ApiPostController::class)->except(['update']);
+Route::put('/posts/{post}', [ApiPostController::class, 'update'])
+    ->name('posts.update')->middleware('auth:user_api_token');
