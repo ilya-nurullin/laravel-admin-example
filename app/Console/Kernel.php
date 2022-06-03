@@ -2,11 +2,30 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SystemInfo;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    /**
+     * @param Schedule $schedule
+     *
+     * @return void
+     */
+    public function serviceTasks(Schedule $schedule): void
+    {
+        $schedule->call(function () {
+            app('log')->info('FROM Schedule - ' . time());
+        })->everyMinute();
+
+        $schedule->command(SystemInfo::class)
+                 ->appendOutputTo(storage_path('logs/system-info.log'))
+                 ->everyFiveMinutes()
+            ->environments(['production', 'stage', 'rc'])->withoutOverlapping()
+        ;
+    }
+
     /**
      * Define the application's command schedule.
      *
@@ -16,6 +35,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        $this->serviceTasks($schedule);
     }
 
     /**
